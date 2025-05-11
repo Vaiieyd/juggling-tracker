@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Juggling Tracker (JS)</title>
+    <title>⚽ Juggling Tracker</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Football Juggling Tracker</h1>
+    <div id="stats"></div>
+    <!-- ✅ Correct: onclick="addSession()" -->
+    <button onclick="addSession()">New Session</button>
+
     <script>
+        // ✅ Ensure all functions are defined INSIDE the <script> tag
         function loadRecords() {
             const records = localStorage.getItem("jugglingRecords");
             return records ? JSON.parse(records) : { sessions: [], personalBest: 0 };
@@ -24,7 +36,7 @@
 
             if (juggles > records.personalBest) {
                 records.personalBest = juggles;
-                alert(?? New Personal Best! ${juggles} juggles! ??);
+                alert(🎉 New Personal Best! ${juggles} juggles! 🎉);
             }
             saveRecords(records);
             updateStats();
@@ -37,11 +49,9 @@
                 <p>Total Sessions: ${records.sessions.length}</p>
             `;
         }
+
+        // ✅ Initialize stats when the page loads
+        updateStats();
     </script>
-</head>
-<body onload="updateStats()">
-    <h1>Football Juggling Tracker</h1>
-    <div id="stats"></div>
-    <button onclick="addSession()">New Session</button>
 </body>
 </html>
