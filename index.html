@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Juggling Tracker (JS)</title>
+    <script>
+        function loadRecords() {
+            const records = localStorage.getItem("jugglingRecords");
+            return records ? JSON.parse(records) : { sessions: [], personalBest: 0 };
+        }
+
+        function saveRecords(records) {
+            localStorage.setItem("jugglingRecords", JSON.stringify(records));
+        }
+
+        function addSession() {
+            const juggles = parseInt(prompt("Enter your highest juggle count:"));
+            if (isNaN(juggles)) return;
+
+            const records = loadRecords();
+            records.sessions.push({
+                date: new Date().toLocaleString(),
+                highestJuggles: juggles
+            });
+
+            if (juggles > records.personalBest) {
+                records.personalBest = juggles;
+                alert(?? New Personal Best! ${juggles} juggles! ??);
+            }
+            saveRecords(records);
+            updateStats();
+        }
+
+        function updateStats() {
+            const records = loadRecords();
+            document.getElementById("stats").innerHTML = `
+                <p>Personal Best: ${records.personalBest} juggles</p>
+                <p>Total Sessions: ${records.sessions.length}</p>
+            `;
+        }
+    </script>
+</head>
+<body onload="updateStats()">
+    <h1>Football Juggling Tracker</h1>
+    <div id="stats"></div>
+    <button onclick="addSession()">New Session</button>
+</body>
+</html>
